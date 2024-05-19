@@ -6,7 +6,9 @@ struct Rectangle{
     int breadth;
     char x;
 };
-
+/* 
+Structures in C++ are user defined data types which are used to store group of items of non-similar data types.
+*/
 int main(){
 //    struct Rectangle r;
     struct Rectangle r={10,5};
