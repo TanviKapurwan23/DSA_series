@@ -1,49 +1,34 @@
-/*
- WHAT IS RECURSION
- EXAMPLE OF RECURSION
- TRACING RECURSION
- STACK USED IN RECURSION
- TIME COMPLEXITY
- RECURRENCE RELATION
- */
-/*
- what is an array
- declaring and initializing
- accessing array
- */
-
 #include<iostream>
 #include<stdlib.h>
-using namespace std;
 
+using namespace std;
 int main(){
-//    int A[5];
-//    int B[5] = {1, 2, 3, 4, 5};
-//    int C[10] = {2, 4, 6};
-//    int D[5] = {0};
-//    int E[] = {11, 22, 33, 44, 55};
-//    for(int i=0; i<5; i++){
-//        printf("%u \n", &A[i]);
-//    }
+    int *q, *p;
+    int i;
     
-    int B[10]={2,4,6,8,10};  // array in stack
-    int *p;
+    p = (int *)malloc(5*sizeof(int));  // size 5
     
-    p = (int *)malloc(sizeof(int));  // array in heap using pointer
-    p[0] = 3;
-    p[1] = 5;
-    p[2] = 7;
-    p[3] = 9;
-    p[4] = 11;
+    p[0] = 1;
+    p[1] = 2;
+    p[2] = 3;
+    p[3] = 4;
+    p[4] = 5;
+    
+    q = (int *)malloc(10*sizeof(int)); // size 10
+    
     
     for(int i=0; i<5; i++){
-        printf("%d ", B[i]);
+        q[i] = p[i];
     }
-    printf("\n");
+    
+    free(p);
+    p=q;
+    q=NULL;
+    
     for(int i=0; i<5; i++){
-        printf("%d ", p[i]);
+        printf("%d \n", p[i]);
     }
     
     
-    return 0 ;
+    return 0;
 }
