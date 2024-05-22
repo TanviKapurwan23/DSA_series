@@ -14,7 +14,7 @@ public:
         int i = 0, j = 0;
         int n1 = word1.size(), n2 = word2.size();
         
-        // Merege characters alternately from both strings
+        // Merge characters alternately from both strings
         while (i < n1 || j < n2) {
             if (i < n1) {
                 result += word1[i++];
