@@ -1,5 +1,7 @@
 #include <iostream>
-
+/*
+Left Subtree sum + Right Subtree sum + node value
+*/
 using namespace std;
 
 struct Node
@@ -16,6 +18,15 @@ struct Node
     }
 };
 
+int sumNodes(Node *root)
+{
+    if(root == NULL){
+        return 0;
+    }
+
+    return sumNodes(root->left) + sumNodes(root->right) + root->data;
+}
+
 int main()
 {
     struct Node *root = new Node(1);
@@ -28,5 +39,12 @@ int main()
     root->right->left = new Node(6);
     root->right->right = new Node(7);
 
+    cout<<sumNodes(root);
+
     return 0;
 }
+
+/*
+OUTPUT:
+28
+*/
