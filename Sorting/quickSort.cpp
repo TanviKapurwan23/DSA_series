@@ -1,78 +1,51 @@
+/*
+Steps:
+
+Pick a pivot element from the array.
+Partition the array into two subarrays: elements less than the pivot and elements greater than the pivot.
+Recursively sort the subarrays.
+*/
+
 #include <iostream>
-using namespace std;
+#include <vector>
 
-void swap(int arr[], int i, int j)
-{
-    int temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-}
-int partition(int arr[], int l, int r)
-{
-    int pivot = arr[r]; // pivot element
-    int i = l - 1;
-
-    for (int j = 1; j < r; j++)
-    {
-        if (arr[j] < pivot)
-        {
+int partition(std::vector<int>& arr, int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
             i++;
-            swap(arr, i, j);
+            std::swap(arr[i], arr[j]);
         }
     }
-    swap(arr, i + 1, r);
-    return i + 1;
+    std::swap(arr[i + 1], arr[high]);
+    return (i + 1);
 }
 
-void quickSort(int arr[], int l, int r)
-{
-    if (l < r)
-    {
-        int pi = partition(arr, l, r); // pivot element index
-        quickSort(arr, l, pi - 1);
-        quickSort(arr, pi + 1, r);
+void quickSort(std::vector<int>& arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
     }
 }
 
-int main()
-{
-    int arr[5] = {5, 4, 3, 2, 1};
-    quickSort(arr, 0, 4);
-    for (int i = 0; i < 5; i++)
-    {
-        cout << arr[i] << " ";
+void printArray(const std::vector<int>& arr) {
+    for (int num : arr) {
+        std::cout << num << " ";
     }
-    cout << endl;
+    std::cout << std::endl;
+}
+
+int main() {
+    std::vector<int> arr = {10, 7, 8, 9, 1, 5};
+    std::cout << "Original array: ";
+    printArray(arr);
+
+    quickSort(arr, 0, arr.size() - 1);
+
+    std::cout << "Sorted array: ";
+    printArray(arr);
 
     return 0;
 }
-
-/*
-
-Quick Sort complexity
-
-depends on pivot:
-1. in Best case, pivot would be median element
-2. in Worst case, pivot could be end element
-
-T(n) = 2T(n/2) + n
-T(n) = 2T(n/2) + n
-T(n/2) = 2T(n/4) + n/2
-T(n/4) = 2T(n/8) + n/4
-:
-:
-:
-T(1) = 1
-
-
-T(n) = n + n + n + .... Log n terms
-     = O(n log n) in best case
-
-
-in worst case,
-T(n) = T(n-1) + n
-
-in this case,
-time complexity would be O(N^2)
-
-*/

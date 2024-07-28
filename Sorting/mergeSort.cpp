@@ -1,91 +1,67 @@
+/*
+Merge Sort
+Algorithm Steps:
+
+Divide the array into two halves.
+Recursively sort each half.
+Merge the two halves to produce the sorted array.
+*/
+
 #include <iostream>
-using namespace std;
+#include <vector>
 
-void merge(int arr[], int l, int mid, int r)
-{
-    int n1 = mid - l + 1;    // array size n1 & n2
-    int n2 = r - mid;
+void merge(std::vector<int>& arr, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
-    int a[n1];
-    int b[n2]; // temp arrays  (small)
+    std::vector<int> L(n1), R(n2);
 
-    for (int i = 0; i < n1; i++)
-    {
-        a[i] = arr[l + i];    // storing l to mid elements
-    }
-    for (int i = 0; i < n2; i++)
-    {
-        b[i] = arr[mid + 1 + i];   // storing mid to r elements
-    }
+    for (int i = 0; i < n1; ++i)
+        L[i] = arr[left + i];
+    for (int i = 0; i < n2; ++i)
+        R[i] = arr[mid + 1 + i];
 
-    int i = 0;    // pointers
-    int j = 0;
-    int k = l;
-
-    while (i < n1 && j < n2)
-    {
-        if (a[i] < b[j])
-        {
-            arr[k] = a[i];
-            k++;
-            i++;
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            ++i;
+        } else {
+            arr[k] = R[j];
+            ++j;
         }
-        else
-        {
-            arr[k] = b[j];
-            k++;
-            j++;
-        }
-    }
-    while (i < n1)
-    {
-        arr[k] = a[i];
-        k++;
-        i++;
+        ++k;
     }
 
-    while (j < n2)
-    {
-        arr[k] = b[j];
-        k++;
-        j++;
+    while (i < n1) {
+        arr[k] = L[i];
+        ++i;
+        ++k;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        ++j;
+        ++k;
     }
 }
 
-void mergeSort(int arr[], int l, int r)   // pointer l and r
-{
-    if (l < r)
-    {
-        int mid = (l + r) / 2;
-        mergeSort(arr, l, mid);     // first half
-        mergeSort(arr, mid + 1, r); // second half
+void mergeSort(std::vector<int>& arr, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
 
-        merge(arr, l, mid, r);      // now merge first and second
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
     }
 }
 
-int main()
-{
-    int arr[] = {5, 4, 3, 2, 1};
-    mergeSort(arr, 0, 4);
-    for (int i = 0; i < 5; i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
+int main() {
+    std::vector<int> arr = {12, 11, 13, 5, 6, 7};
+    mergeSort(arr, 0, arr.size() - 1);
 
+    for (int x : arr)
+        std::cout << x << " ";
     return 0;
 }
-
-/*
-Time Complexity:
-
-T(n) = n+n+n+...Log n terms
-     = n Log n
-
-
-OUTPUT:
-
-1 2 3 4 5 
-
-*/
